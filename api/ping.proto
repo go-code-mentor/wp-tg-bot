@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/go-code-mentor/wp-tg-bot/api";
+option go_package = "api/";
 
 service Pinger {
   rpc Ping (PingRequest) returns (PingResponse);
