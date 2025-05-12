@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/go-code-mentor/wp-tg-bot/api";
+
+service Pinger {
+  rpc Ping (PingRequest) returns (PingResponse);
+}
+
+message PingRequest {}
+
+message PingResponse {
+  string status = 1;
+}
