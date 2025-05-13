@@ -1,33 +1,23 @@
 package main
 
 import (
+	"github.com/go-code-mentor/wp-tg-bot/internal/app"
 	"github.com/go-code-mentor/wp-tg-bot/internal/config"
-	server "github.com/go-code-mentor/wp-tg-bot/internal/grpc"
 	"log"
-	"os"
-	"os/signal"
-	"syscall"
 )
 
 func main() {
-
-	cfg, err := config.ParseConfig()
+	cfg := config.New()
+	err := cfg.ParseConfig()
 	if err != nil {
-		log.Fatalf("failed to pasre config: %s", err)
+		log.Fatalf("failed to parse config: %s", err)
 	}
 
-	srv := server.New()
+	a := app.New(cfg)
+	a.Build()
+	if err = a.Run(); err != nil {
+		log.Fatalf("failed to run app: %s", err)
+	}
 
-	go func() {
-		if err := srv.Run(cfg.GrpcConnString()); err != nil {
-			log.Fatalf("Failed to run server: %v", err)
-		}
-	}()
-
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
-	<-quit
-
-	srv.Stop()
-	log.Println("Server stopped")
+	log.Println("app successfully stopped")
 }
