@@ -26,5 +26,5 @@ func (c *Config) ParseConfig() error {
 }
 
 func (c *Config) GrpcConnString() string {
-	return fmt.Sprintf("%s:%s", c.GRPC.Host, c.GRPC.Port)
+	return fmt.Sprintf("%s:%s", c.Host, c.Port)
 }
