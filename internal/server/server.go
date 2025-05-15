@@ -7,29 +7,34 @@ import (
 	"google.golang.org/grpc"
 )
 
-type Server struct {
-	Rpc *grpc.Server
+type Server interface {
+	Conn() *grpc.Server
+	Run(addr string) error
+	Stop()
 }
 
-func New() *Server {
-	rpc := grpc.NewServer()
-	return &Server{Rpc: rpc}
+type grpcServer struct {
+	grpc *grpc.Server
 }
 
-func (s *Server) Conn() *grpc.Server {
-	return s.Rpc
+func New() Server {
+	return &grpcServer{grpc: grpc.NewServer()}
 }
 
-func (s *Server) Run(addr string) error {
+func (s *grpcServer) Conn() *grpc.Server {
+	return s.grpc
+}
+
+func (s *grpcServer) Run(addr string) error {
 	lis, err := net.Listen("tcp", addr)
 	if err != nil {
 		return err
 	}
 
 	log.Printf("Starting gRPC server on %s", addr)
-	return s.Rpc.Serve(lis)
+	return s.grpc.Serve(lis)
 }
 
-func (s *Server) Stop() {
-	s.Rpc.GracefulStop()
+func (s *grpcServer) Stop() {
+	s.grpc.GracefulStop()
 }
