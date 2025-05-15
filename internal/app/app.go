@@ -2,13 +2,8 @@ package app
 
 import (
 	"fmt"
-	"github.com/go-code-mentor/wp-tg-bot/internal/grpc"
+	"github.com/go-code-mentor/wp-tg-bot/internal/server"
 )
-
-type GRPC interface {
-	Run(addr string) error
-	Stop()
-}
 
 type Config interface {
 	GrpcConnString() string
@@ -21,20 +16,20 @@ func New(cfg Config) *App {
 }
 
 type App struct {
-	cfg  Config
-	grpc *grpc.Server
+	cfg    Config
+	server *server.Server
 }
 
 func (a *App) Build() {
-	a.grpc = grpc.New()
+	a.server = server.New()
 }
 
 func (a *App) Run() error {
-	defer a.grpc.Stop()
+	defer a.server.Stop()
 
-	err := a.grpc.Run(a.cfg.GrpcConnString())
+	err := a.server.Run(a.cfg.GrpcConnString())
 	if err != nil {
-		return fmt.Errorf("failed to run grpc server: %v", err)
+		return fmt.Errorf("failed to run server server: %v", err)
 	}
 	return nil
 }

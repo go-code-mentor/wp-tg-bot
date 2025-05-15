@@ -1,4 +1,4 @@
-package grpc
+package server
 
 import (
 	"github.com/go-code-mentor/wp-tg-bot/api"
@@ -10,7 +10,7 @@ import (
 )
 
 type Server struct {
-	grpcServer *grpc.Server
+	rpc *grpc.Server
 }
 
 func New() *Server {
@@ -19,11 +19,8 @@ func New() *Server {
 	pingService := service.NewPingService()
 	api.RegisterPingerServer(grpcServer, pingService)
 
-	return &Server{
-		grpcServer: grpcServer,
-	}
+	return &Server{rpc: grpcServer}
 }
-
 func (s *Server) Run(addr string) error {
 	lis, err := net.Listen("tcp", addr)
 	if err != nil {
@@ -31,9 +28,9 @@ func (s *Server) Run(addr string) error {
 	}
 
 	log.Printf("Starting gRPC server on %s", addr)
-	return s.grpcServer.Serve(lis)
+	return s.rpc.Serve(lis)
 }
 
 func (s *Server) Stop() {
-	s.grpcServer.GracefulStop()
+	s.rpc.GracefulStop()
 }
