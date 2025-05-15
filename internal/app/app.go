@@ -11,7 +11,7 @@ type Config interface {
 	GrpcConnString() string
 }
 
-func New(cfg Config, srv *server.Grpc) *App {
+func New(cfg Config, srv server.Server) *App {
 	return &App{
 		cfg:    cfg,
 		server: srv,
@@ -20,13 +20,13 @@ func New(cfg Config, srv *server.Grpc) *App {
 
 type App struct {
 	cfg    Config
-	server *server.Grpc
+	server server.Server
 }
 
 func (a *App) Build() {
 
 	pingService := service.NewPingService()
-	api.RegisterPingerServer(a.server.Server, pingService)
+	api.RegisterPingerServer(a.server.Conn(), pingService)
 }
 
 func (a *App) Run() error {
