@@ -5,7 +5,14 @@ import (
 	"github.com/go-code-mentor/wp-tg-bot/api"
 	"github.com/go-code-mentor/wp-tg-bot/internal/server"
 	"github.com/go-code-mentor/wp-tg-bot/internal/service"
+	"google.golang.org/grpc"
 )
+
+type Server interface {
+	Conn() *grpc.Server
+	Run(addr string) error
+	Stop()
+}
 
 type Config interface {
 	GrpcConnString() string
@@ -19,14 +26,14 @@ func New(cfg Config) *App {
 
 type App struct {
 	cfg    Config
-	server *server.Server
+	server Server
 }
 
 func (a *App) Build() {
 	a.server = server.New()
 
 	pingService := service.NewPingService()
-	api.RegisterPingerServer(a.server.Rpc, pingService)
+	api.RegisterPingerServer(a.server.Conn(), pingService)
 }
 
 func (a *App) Run() error {

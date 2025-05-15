@@ -15,6 +15,11 @@ func New() *Server {
 	rpc := grpc.NewServer()
 	return &Server{Rpc: rpc}
 }
+
+func (s *Server) Conn() *grpc.Server {
+	return s.Rpc
+}
+
 func (s *Server) Run(addr string) error {
 	lis, err := net.Listen("tcp", addr)
 	if err != nil {
