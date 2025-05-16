@@ -11,4 +11,4 @@ protoc:
 	curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v31.0/protoc-31.0-linux-x86_64.zip && unzip -oq protoc-31.0-linux-x86_64.zip -d ./bin/protoc && rm -f protoc-31.0-linux-x86_64.zip
 
 protoc_gen:
-	protoc --go_out=. --go-grpc_out=. api/ping.proto
+	./bin/protoc/bin/protoc --go_out=. --go-grpc_out=. api/ping.proto
