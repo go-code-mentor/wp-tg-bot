@@ -1,16 +1,21 @@
 package handler
 
 import (
+	"context"
 	"github.com/go-code-mentor/wp-tg-bot/api"
-	"google.golang.org/grpc"
 )
 
 type Handler struct {
-	PingService
+	api.UnimplementedPingerServer
 }
 
-func New(server *grpc.Server) *Handler {
-	pingService := newPingService()
-	api.RegisterPingerServer(server, pingService)
+func New() *Handler {
 	return &Handler{}
+}
+
+func (h *Handler) Ping(ctx context.Context, req *api.PingRequest) (*api.PingResponse, error) {
+	_, _ = ctx, req
+	return &api.PingResponse{
+		Status: "PONG",
+	}, nil
 }
