@@ -2,9 +2,8 @@ package app
 
 import (
 	"fmt"
-	"github.com/go-code-mentor/wp-tg-bot/api"
+	"github.com/go-code-mentor/wp-tg-bot/internal/handler"
 	"github.com/go-code-mentor/wp-tg-bot/internal/server"
-	"github.com/go-code-mentor/wp-tg-bot/internal/service"
 )
 
 type Config interface {
@@ -18,15 +17,14 @@ func New(cfg Config) *App {
 }
 
 type App struct {
-	cfg    Config
-	server *server.Server
+	cfg     Config
+	server  *server.Server
+	handler *handler.Handler
 }
 
 func (a *App) Build() {
 	a.server = server.New()
-
-	pingService := service.NewPingService()
-	api.RegisterPingerServer(a.server.Grpc, pingService)
+	a.handler = handler.New(a.server.Grpc)
 }
 
 func (a *App) Run() error {

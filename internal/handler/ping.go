@@ -1,4 +1,4 @@
-package service
+package handler
 
 import (
 	"context"
@@ -9,7 +9,7 @@ type PingService struct {
 	api.UnimplementedPingerServer
 }
 
-func NewPingService() *PingService {
+func newPingService() *PingService {
 	return &PingService{}
 }
 
