@@ -12,3 +12,6 @@ protoc:
 
 protoc_gen:
 	./bin/protoc/bin/protoc --go_out=. --go-grpc_out=. api/ping.proto
+
+run:
+	go run cmd/app/main.go
