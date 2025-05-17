@@ -27,6 +27,7 @@ func (a *App) Build() {
 	a.server = server.New()
 	a.handler = handler.New()
 	api.RegisterPingerServer(a.server.Grpc, a.handler)
+	api.RegisterTaskAddServer(a.server.Grpc, a.handler)
 }
 
 func (a *App) Run() error {
