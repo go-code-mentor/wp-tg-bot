@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"github.com/go-code-mentor/wp-tg-bot/api"
 	"github.com/go-code-mentor/wp-tg-bot/internal/handler"
 	"github.com/go-code-mentor/wp-tg-bot/internal/server"
 )
@@ -24,7 +25,8 @@ type App struct {
 
 func (a *App) Build() {
 	a.server = server.New()
-	a.handler = handler.New(a.server.Grpc)
+	a.handler = handler.New()
+	api.RegisterPingerServer(a.server.Grpc, a.handler)
 }
 
 func (a *App) Run() error {
