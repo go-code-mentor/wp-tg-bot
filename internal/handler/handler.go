@@ -23,7 +23,7 @@ func (s *Handler) Ping(ctx context.Context, req *api.PingRequest) (*api.PingResp
 }
 
 func (s *Handler) TaskAdd(ctx context.Context, req *api.TaskAddRequest) (*api.TaskAddResponse, error) {
-	_, _ = ctx, req
+	_ = ctx
 	fmt.Printf("New task added with id: %d,name: %s,description: %s,owner:%s", req.Id, req.Name, req.Description, req.Owner)
 	return &api.TaskAddResponse{
 		Status: "OK",
