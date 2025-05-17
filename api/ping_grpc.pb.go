@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v6.30.2
-// source: api/ping.proto
+// source: api/api.proto
 
 package api
 
@@ -117,5 +117,5 @@ var Pinger_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/ping.proto",
+	Metadata: "api/api.proto",
 }

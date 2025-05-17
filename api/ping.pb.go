@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v6.30.2
-// source: api/ping.proto
+// source: api/api.proto
 
 package api
 
@@ -105,7 +105,7 @@ var File_api_ping_proto protoreflect.FileDescriptor
 
 const file_api_ping_proto_rawDesc = "" +
 	"\n" +
-	"\x0eapi/ping.proto\x12\x03api\"\r\n" +
+	"\x0eapi/api.proto\x12\x03api\"\r\n" +
 	"\vPingRequest\"&\n" +
 	"\fPingResponse\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\tR\x06status25\n" +

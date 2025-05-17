@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "api/";
+
+service Pinger {
+  rpc Ping (PingRequest) returns (PingResponse);
+}
+
+message PingRequest {}
+
+message PingResponse {
+  string status = 1;
+}
+
+service TaskAdd{
+  rpc TaskAdd (TaskAddRequest) returns (TaskAddResponse);
+}
+
+message TaskAddRequest{
+  uint64 id =1;
+  string name = 2;
+  string description = 3;
+  string owner = 4 ;
+}
+
+message TaskAddResponse {
+  string status = 1;
+}
