@@ -7,8 +7,7 @@ import (
 )
 
 type Handler struct {
-	api.UnimplementedPingerServer
-	api.UnimplementedTaskAddServer
+	api.UnimplementedTgBotServer
 }
 
 func New() *Handler {
