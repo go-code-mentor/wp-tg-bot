@@ -1,5 +1,5 @@
 export GOBIN=${PWD}/bin
-export PATH= $(shell printenv PATH):${GOBIN}
+export PATH=$(shell printenv PATH):${GOBIN}
 
 tools:
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b ./bin v2.0.2
