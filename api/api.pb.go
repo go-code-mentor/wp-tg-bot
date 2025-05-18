@@ -227,11 +227,10 @@ const file_api_api_proto_rawDesc = "" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x14\n" +
 	"\x05owner\x18\x04 \x01(\tR\x05owner\")\n" +
 	"\x0fTaskAddResponse\x12\x16\n" +
-	"\x06status\x18\x01 \x01(\tR\x06status25\n" +
-	"\x06Pinger\x12+\n" +
-	"\x04Ping\x12\x10.api.PingRequest\x1a\x11.api.PingResponse2?\n" +
-	"\aTaskAdd\x124\n" +
-	"\aTaskAdd\x12\x13.api.TaskAddRequest\x1a\x14.api.TaskAddResponseB\x06Z\x04api/b\x06proto3"
+	"\x06status\x18\x01 \x01(\tR\x06status2j\n" +
+	"\x05TgBot\x124\n" +
+	"\aTaskAdd\x12\x13.api.TaskAddRequest\x1a\x14.api.TaskAddResponse\x12+\n" +
+	"\x04Ping\x12\x10.api.PingRequest\x1a\x11.api.PingResponseB\x06Z\x04api/b\x06proto3"
 
 var (
 	file_api_api_proto_rawDescOnce sync.Once
@@ -253,10 +252,10 @@ var file_api_api_proto_goTypes = []any{
 	(*TaskAddResponse)(nil), // 3: api.TaskAddResponse
 }
 var file_api_api_proto_depIdxs = []int32{
-	0, // 0: api.Pinger.Ping:input_type -> api.PingRequest
-	2, // 1: api.TaskAdd.TaskAdd:input_type -> api.TaskAddRequest
-	1, // 2: api.Pinger.Ping:output_type -> api.PingResponse
-	3, // 3: api.TaskAdd.TaskAdd:output_type -> api.TaskAddResponse
+	2, // 0: api.TgBot.TaskAdd:input_type -> api.TaskAddRequest
+	0, // 1: api.TgBot.Ping:input_type -> api.PingRequest
+	3, // 2: api.TgBot.TaskAdd:output_type -> api.TaskAddResponse
+	1, // 3: api.TgBot.Ping:output_type -> api.PingResponse
 	2, // [2:4] is the sub-list for method output_type
 	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -277,7 +276,7 @@ func file_api_api_proto_init() {
 			NumEnums:      0,
 			NumMessages:   4,
 			NumExtensions: 0,
-			NumServices:   2,
+			NumServices:   1,
 		},
 		GoTypes:           file_api_api_proto_goTypes,
 		DependencyIndexes: file_api_api_proto_depIdxs,

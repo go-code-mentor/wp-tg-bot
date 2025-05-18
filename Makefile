@@ -8,8 +8,8 @@ test:
 	go test -v -race ./...
 
 protoc:
-	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.36.6
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.5.1
 	curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v31.0/protoc-31.0-linux-x86_64.zip && unzip -oq protoc-31.0-linux-x86_64.zip -d ./bin/protoc && rm -f protoc-31.0-linux-x86_64.zip
 
 protoc_gen:

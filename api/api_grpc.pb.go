@@ -19,203 +19,139 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Pinger_Ping_FullMethodName = "/api.Pinger/Ping"
+	TgBot_TaskAdd_FullMethodName = "/api.TgBot/TaskAdd"
+	TgBot_Ping_FullMethodName    = "/api.TgBot/Ping"
 )
 
-// PingerClient is the client API for Pinger service.
+// TgBotClient is the client API for TgBot service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type PingerClient interface {
+type TgBotClient interface {
+	TaskAdd(ctx context.Context, in *TaskAddRequest, opts ...grpc.CallOption) (*TaskAddResponse, error)
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error)
 }
 
-type pingerClient struct {
+type tgBotClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewPingerClient(cc grpc.ClientConnInterface) PingerClient {
-	return &pingerClient{cc}
+func NewTgBotClient(cc grpc.ClientConnInterface) TgBotClient {
+	return &tgBotClient{cc}
 }
 
-func (c *pingerClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PingResponse)
-	err := c.cc.Invoke(ctx, Pinger_Ping_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// PingerServer is the server API for Pinger service.
-// All implementations must embed UnimplementedPingerServer
-// for forward compatibility.
-type PingerServer interface {
-	Ping(context.Context, *PingRequest) (*PingResponse, error)
-	mustEmbedUnimplementedPingerServer()
-}
-
-// UnimplementedPingerServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedPingerServer struct{}
-
-func (UnimplementedPingerServer) Ping(context.Context, *PingRequest) (*PingResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
-}
-func (UnimplementedPingerServer) mustEmbedUnimplementedPingerServer() {}
-func (UnimplementedPingerServer) testEmbeddedByValue()                {}
-
-// UnsafePingerServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to PingerServer will
-// result in compilation errors.
-type UnsafePingerServer interface {
-	mustEmbedUnimplementedPingerServer()
-}
-
-func RegisterPingerServer(s grpc.ServiceRegistrar, srv PingerServer) {
-	// If the following call pancis, it indicates UnimplementedPingerServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&Pinger_ServiceDesc, srv)
-}
-
-func _Pinger_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PingRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PingerServer).Ping(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Pinger_Ping_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PingerServer).Ping(ctx, req.(*PingRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// Pinger_ServiceDesc is the grpc.ServiceDesc for Pinger service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var Pinger_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.Pinger",
-	HandlerType: (*PingerServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Ping",
-			Handler:    _Pinger_Ping_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/api.proto",
-}
-
-const (
-	TaskAdd_TaskAdd_FullMethodName = "/api.TaskAdd/TaskAdd"
-)
-
-// TaskAddClient is the client API for TaskAdd service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type TaskAddClient interface {
-	TaskAdd(ctx context.Context, in *TaskAddRequest, opts ...grpc.CallOption) (*TaskAddResponse, error)
-}
-
-type taskAddClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewTaskAddClient(cc grpc.ClientConnInterface) TaskAddClient {
-	return &taskAddClient{cc}
-}
-
-func (c *taskAddClient) TaskAdd(ctx context.Context, in *TaskAddRequest, opts ...grpc.CallOption) (*TaskAddResponse, error) {
+func (c *tgBotClient) TaskAdd(ctx context.Context, in *TaskAddRequest, opts ...grpc.CallOption) (*TaskAddResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(TaskAddResponse)
-	err := c.cc.Invoke(ctx, TaskAdd_TaskAdd_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TgBot_TaskAdd_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// TaskAddServer is the server API for TaskAdd service.
-// All implementations must embed UnimplementedTaskAddServer
-// for forward compatibility.
-type TaskAddServer interface {
-	TaskAdd(context.Context, *TaskAddRequest) (*TaskAddResponse, error)
-	mustEmbedUnimplementedTaskAddServer()
+func (c *tgBotClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PingResponse)
+	err := c.cc.Invoke(ctx, TgBot_Ping_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedTaskAddServer must be embedded to have
+// TgBotServer is the server API for TgBot service.
+// All implementations must embed UnimplementedTgBotServer
+// for forward compatibility.
+type TgBotServer interface {
+	TaskAdd(context.Context, *TaskAddRequest) (*TaskAddResponse, error)
+	Ping(context.Context, *PingRequest) (*PingResponse, error)
+	mustEmbedUnimplementedTgBotServer()
+}
+
+// UnimplementedTgBotServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedTaskAddServer struct{}
+type UnimplementedTgBotServer struct{}
 
-func (UnimplementedTaskAddServer) TaskAdd(context.Context, *TaskAddRequest) (*TaskAddResponse, error) {
+func (UnimplementedTgBotServer) TaskAdd(context.Context, *TaskAddRequest) (*TaskAddResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TaskAdd not implemented")
 }
-func (UnimplementedTaskAddServer) mustEmbedUnimplementedTaskAddServer() {}
-func (UnimplementedTaskAddServer) testEmbeddedByValue()                 {}
+func (UnimplementedTgBotServer) Ping(context.Context, *PingRequest) (*PingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedTgBotServer) mustEmbedUnimplementedTgBotServer() {}
+func (UnimplementedTgBotServer) testEmbeddedByValue()               {}
 
-// UnsafeTaskAddServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TaskAddServer will
+// UnsafeTgBotServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TgBotServer will
 // result in compilation errors.
-type UnsafeTaskAddServer interface {
-	mustEmbedUnimplementedTaskAddServer()
+type UnsafeTgBotServer interface {
+	mustEmbedUnimplementedTgBotServer()
 }
 
-func RegisterTaskAddServer(s grpc.ServiceRegistrar, srv TaskAddServer) {
-	// If the following call pancis, it indicates UnimplementedTaskAddServer was
+func RegisterTgBotServer(s grpc.ServiceRegistrar, srv TgBotServer) {
+	// If the following call pancis, it indicates UnimplementedTgBotServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&TaskAdd_ServiceDesc, srv)
+	s.RegisterService(&TgBot_ServiceDesc, srv)
 }
 
-func _TaskAdd_TaskAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TgBot_TaskAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TaskAddRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TaskAddServer).TaskAdd(ctx, in)
+		return srv.(TgBotServer).TaskAdd(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TaskAdd_TaskAdd_FullMethodName,
+		FullMethod: TgBot_TaskAdd_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskAddServer).TaskAdd(ctx, req.(*TaskAddRequest))
+		return srv.(TgBotServer).TaskAdd(ctx, req.(*TaskAddRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// TaskAdd_ServiceDesc is the grpc.ServiceDesc for TaskAdd service.
+func _TgBot_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TgBotServer).Ping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TgBot_Ping_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TgBotServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// TgBot_ServiceDesc is the grpc.ServiceDesc for TgBot service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var TaskAdd_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.TaskAdd",
-	HandlerType: (*TaskAddServer)(nil),
+var TgBot_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "api.TgBot",
+	HandlerType: (*TgBotServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "TaskAdd",
-			Handler:    _TaskAdd_TaskAdd_Handler,
+			Handler:    _TgBot_TaskAdd_Handler,
+		},
+		{
+			MethodName: "Ping",
+			Handler:    _TgBot_Ping_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
