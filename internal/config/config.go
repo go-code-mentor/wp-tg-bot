@@ -11,11 +11,16 @@ func New() *Config {
 
 type Config struct {
 	GRPC
+	Telegram
 }
 
 type GRPC struct {
 	Host string `env:"GRPC_HOST" env-default:"localhost"`
 	Port string `env:"GRPC_HOST_PORT" env-default:"8080"`
+}
+
+type Telegram struct {
+	Token string `env:"TELEGRAM_TOKEN" env-default:""`
 }
 
 func (c *Config) ParseConfig() error {
