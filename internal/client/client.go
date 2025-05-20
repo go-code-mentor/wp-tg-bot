@@ -45,7 +45,3 @@ func startHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 		fmt.Printf("failed to send message: %v", err)
 	}
 }
-
-func (t *Telegram) NewTask(ctx context.Context) {
-	//_,_=t.Bot.SendMessage()
-}
