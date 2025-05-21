@@ -25,13 +25,18 @@ type App struct {
 	handler  *handler.Handler
 }
 
-func (a *App) Build() {
+func (a *App) Build() error {
 	a.server = server.New()
 	a.handler = handler.New()
 	api.RegisterTgBotServer(a.server.Grpc, a.handler)
 
-	a.telegram = client.New(a.cfg.Token)
+	telegram, err := client.New(a.cfg.Token)
+	if err != nil {
+		return err
+	}
+	a.telegram = telegram
 
+	return nil
 }
 
 func (a *App) Run() error {

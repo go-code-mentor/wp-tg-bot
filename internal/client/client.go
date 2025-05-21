@@ -5,24 +5,23 @@ import (
 	"fmt"
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
-	"log"
 )
 
 type Telegram struct {
 	Bot *bot.Bot
 }
 
-func New(token string) *Telegram {
+func New(token string) (*Telegram, error) {
 	b, err := bot.New(token, bot.WithDefaultHandler(defaultHandler))
 	if err != nil {
-		log.Fatalf("failed to init client: %s", err)
+		return nil, fmt.Errorf("failed to init client: %s", err)
 	}
 
 	b.RegisterHandler(bot.HandlerTypeMessageText, "bar", bot.MatchTypeCommand, startHandler)
 
 	return &Telegram{
 		Bot: b,
-	}
+	}, nil
 }
 
 func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
