@@ -3,44 +3,38 @@ package client
 import (
 	"context"
 	"fmt"
+	"github.com/go-code-mentor/wp-tg-bot/internal/config"
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/models"
+	"time"
 )
 
 type Telegram struct {
-	Bot *bot.Bot
+	Bot    *bot.Bot
+	Config *config.Config
 }
 
-func New(token string) (*Telegram, error) {
-	b, err := bot.New(token, bot.WithDefaultHandler(defaultHandler))
+func New(token string, config *config.Config) (*Telegram, error) {
+	b, err := bot.New(token)
 	if err != nil {
 		return nil, fmt.Errorf("failed to init client: %s", err)
 	}
 
-	b.RegisterHandler(bot.HandlerTypeMessageText, "bar", bot.MatchTypeCommand, startHandler)
-
 	return &Telegram{
-		Bot: b,
+		Bot:    b,
+		Config: config,
 	}, nil
 }
 
-func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
-	_, err := b.SendMessage(ctx, &bot.SendMessageParams{
-		ChatID:    update.Message.Chat.ID,
-		Text:      "Say message with `/start` to starting subscription",
-		ParseMode: models.ParseModeMarkdown,
-	})
-	if err != nil {
-		fmt.Printf("failed to send message: %v", err)
-	}
-}
+func (t *Telegram) SendMessage() error {
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	defer cancel()
 
-func startHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
-	_, err := b.SendMessage(ctx, &bot.SendMessageParams{
-		ChatID: update.Message.Chat.ID,
+	_, err := t.Bot.SendMessage(ctx, &bot.SendMessageParams{
+		ChatID: t.Config.ChatID,
 		Text:   "Subscription started",
 	})
 	if err != nil {
-		fmt.Printf("failed to send message: %v", err)
+		return fmt.Errorf("failed to send message to ChatID %s : %s", t.Config.ChatID, err)
 	}
+	return nil
 }

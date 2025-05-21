@@ -20,7 +20,8 @@ type GRPC struct {
 }
 
 type Telegram struct {
-	Token string `env:"TELEGRAM_TOKEN" env-default:""`
+	Token  string `env:"TELEGRAM_TOKEN" env-default:""`
+	ChatID string `env:"TELEGRAM_CHAT_ID" env-default:""`
 }
 
 func (c *Config) ParseConfig() error {
