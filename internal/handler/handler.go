@@ -2,28 +2,45 @@ package handler
 
 import (
 	"context"
-	"fmt"
 	"github.com/go-code-mentor/wp-tg-bot/api"
+	"github.com/go-code-mentor/wp-tg-bot/internal/entities"
+	"github.com/go-code-mentor/wp-tg-bot/internal/service"
 )
 
 type Handler struct {
 	api.UnimplementedTgBotServer
+	service *service.Service
 }
 
-func New() *Handler {
-	return &Handler{}
+func New(service *service.Service) *Handler {
+	return &Handler{
+		service: service,
+	}
 }
 
-func (s *Handler) Ping(ctx context.Context, req *api.PingRequest) (*api.PingResponse, error) {
+func (h *Handler) Ping(ctx context.Context, req *api.PingRequest) (*api.PingResponse, error) {
 	_, _ = ctx, req
 	return &api.PingResponse{
 		Status: "PONG",
 	}, nil
 }
 
-func (s *Handler) TaskAdd(ctx context.Context, req *api.TaskAddRequest) (*api.TaskAddResponse, error) {
-	_ = ctx
-	fmt.Printf("New task added with id: %d,name: %s,description: %s,owner:%s", req.Id, req.Name, req.Description, req.Owner)
+func (h *Handler) TaskAdd(ctx context.Context, req *api.TaskAddRequest) (*api.TaskAddResponse, error) {
+	request := "TaskAdd"
+	task := entities.Task{
+		ID:          req.Id,
+		Name:        req.Name,
+		Description: req.Description,
+		Owner:       req.Owner,
+	}
+
+	err := h.service.SendMessage(ctx, request, task)
+	if err != nil {
+		return &api.TaskAddResponse{
+			Status: "FAILED",
+		}, nil
+	}
+
 	return &api.TaskAddResponse{
 		Status: "OK",
 	}, nil

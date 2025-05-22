@@ -26,16 +26,17 @@ type App struct {
 
 func (a *App) Build() error {
 	a.server = server.New()
-	a.handler = handler.New()
-	api.RegisterTgBotServer(a.server.Grpc, a.handler)
 
-	telegram, err := client.New(a.cfg.Token, a.cfg)
+	telegram, err := client.New(a.cfg.Token, a.cfg.ChatID)
 	if err != nil {
 		return err
 	}
 
 	a.telegram = telegram
 	a.service = service.New(telegram)
+
+	a.handler = handler.New(a.service)
+	api.RegisterTgBotServer(a.server.Grpc, a.handler)
 
 	return nil
 }
