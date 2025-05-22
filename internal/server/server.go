@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"log"
 	"net"
 
@@ -18,7 +19,7 @@ func New() *Server {
 func (s *Server) Run(addr string) error {
 	lis, err := net.Listen("tcp", addr)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to open socket: %w", err)
 	}
 
 	log.Printf("Starting gRPC server on %s", addr)

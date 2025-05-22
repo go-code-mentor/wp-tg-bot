@@ -29,7 +29,7 @@ func (a *App) Build() error {
 
 	telegram, err := client.New(a.cfg.Token, a.cfg.ChatID)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to init telegram client: %w", err)
 	}
 
 	a.telegram = telegram
