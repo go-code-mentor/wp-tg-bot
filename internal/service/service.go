@@ -17,10 +17,12 @@ func New(telegram *client.Telegram) *Service {
 	}
 }
 
-func (s *Service) SendMessage(ctx context.Context, request string, task entities.Task) error {
-	err := s.client.SendMessage(ctx, request, task)
+func (s *Service) TaskAdd(ctx context.Context, task entities.Task) error {
+	msg := fmt.Sprintf("New task added with id: %d,name: %s,description: %s,owner: %s", task.ID, task.Name, task.Description, task.Owner)
+
+	err := s.client.SendMessage(ctx, msg)
 	if err != nil {
-		return fmt.Errorf("error sending message: %v", err)
+		return fmt.Errorf("error sending message: %w", err)
 	}
 	return nil
 }

@@ -26,7 +26,6 @@ func (h *Handler) Ping(ctx context.Context, req *api.PingRequest) (*api.PingResp
 }
 
 func (h *Handler) TaskAdd(ctx context.Context, req *api.TaskAddRequest) (*api.TaskAddResponse, error) {
-	request := "TaskAdd"
 	task := entities.Task{
 		ID:          req.Id,
 		Name:        req.Name,
@@ -34,7 +33,7 @@ func (h *Handler) TaskAdd(ctx context.Context, req *api.TaskAddRequest) (*api.Ta
 		Owner:       req.Owner,
 	}
 
-	err := h.service.SendMessage(ctx, request, task)
+	err := h.service.TaskAdd(ctx, task)
 	if err != nil {
 		return &api.TaskAddResponse{
 			Status: "FAILED",

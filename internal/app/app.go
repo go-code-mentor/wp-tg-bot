@@ -46,7 +46,7 @@ func (a *App) Run() error {
 
 	err := a.server.Run(a.cfg.GrpcConnString())
 	if err != nil {
-		return fmt.Errorf("failed to run server server: %v", err)
+		return fmt.Errorf("failed to run server server: %w", err)
 	}
 	return nil
 }
