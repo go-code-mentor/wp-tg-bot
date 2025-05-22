@@ -26,7 +26,7 @@ type Telegram struct {
 
 func (c *Config) ParseConfig() error {
 	if err := cleanenv.ReadEnv(c); err != nil {
-		return err
+		return fmt.Errorf("failed to read env's :%w", err)
 	}
 	return nil
 }
