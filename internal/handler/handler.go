@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"fmt"
 	"github.com/go-code-mentor/wp-tg-bot/api"
 	"github.com/go-code-mentor/wp-tg-bot/internal/entities"
 	"github.com/go-code-mentor/wp-tg-bot/internal/service"
@@ -41,7 +42,7 @@ func (h *Handler) TaskAdd(ctx context.Context, req *api.TaskAddRequest) (*api.Ta
 	if err != nil {
 		return &api.TaskAddResponse{
 			Status: "FAILED",
-		}, nil
+		}, fmt.Errorf("failed to adding task: %w", err)
 	}
 
 	return &api.TaskAddResponse{
