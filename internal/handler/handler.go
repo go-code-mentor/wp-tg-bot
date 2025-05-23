@@ -7,14 +7,18 @@ import (
 	"github.com/go-code-mentor/wp-tg-bot/internal/service"
 )
 
+type Service interface {
+	TaskAdd(ctx context.Context, task entities.Task) error
+}
+
 type Handler struct {
 	api.UnimplementedTgBotServer
-	service *service.Service
+	Service Service
 }
 
 func New(service *service.Service) *Handler {
 	return &Handler{
-		service: service,
+		Service: service,
 	}
 }
 
@@ -33,7 +37,7 @@ func (h *Handler) TaskAdd(ctx context.Context, req *api.TaskAddRequest) (*api.Ta
 		Owner:       req.Owner,
 	}
 
-	err := h.service.TaskAdd(ctx, task)
+	err := h.Service.TaskAdd(ctx, task)
 	if err != nil {
 		return &api.TaskAddResponse{
 			Status: "FAILED",
