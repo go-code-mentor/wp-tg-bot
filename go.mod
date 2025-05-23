@@ -3,6 +3,7 @@ module github.com/go-code-mentor/wp-tg-bot
 go 1.24.1
 
 require (
+	github.com/go-telegram/bot v1.15.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	google.golang.org/grpc v1.72.0
 	google.golang.org/protobuf v1.36.6
