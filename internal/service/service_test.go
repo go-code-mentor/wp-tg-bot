@@ -25,13 +25,14 @@ func TestService_TaskAdd(t *testing.T) {
 		s := &service.Service{
 			Client: c,
 		}
-		msg := "message"
+
 		task := entities.Task{
 			ID:          1,
 			Name:        "test",
 			Description: "test description",
 			Owner:       "test",
 		}
+		msg := fmt.Sprintf("New task added with id: %d,name: %s,description: %s,owner: %s", task.ID, task.Name, task.Description, task.Owner)
 
 		c.On("SendMessage", mock.Anything, msg).Return(nil)
 
@@ -44,13 +45,14 @@ func TestService_TaskAdd(t *testing.T) {
 		s := &service.Service{
 			Client: c,
 		}
-		msg := "message"
+
 		task := entities.Task{
 			ID:          1,
 			Name:        "test",
 			Description: "test description",
 			Owner:       "test",
 		}
+		msg := fmt.Sprintf("New task added with id: %d,name: %s,description: %s,owner: %s", task.ID, task.Name, task.Description, task.Owner)
 
 		c.On("SendMessage", mock.Anything, msg).Return(fmt.Errorf("error"))
 
