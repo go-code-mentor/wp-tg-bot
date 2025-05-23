@@ -45,7 +45,7 @@ func TestHandler_TaskAdd(t *testing.T) {
 			Service: s,
 		}
 
-		s.On("TaskAdd", mock.Anything, req).Return(nil)
+		s.On("TaskAdd", mock.Anything, entities.Task{ID: req.Id, Name: req.Name, Description: req.Description, Owner: req.Owner}).Return(nil)
 
 		res, err := h.TaskAdd(context.Background(), req)
 
@@ -66,7 +66,7 @@ func TestHandler_TaskAdd(t *testing.T) {
 			Service: s,
 		}
 
-		s.On("TaskAdd", mock.Anything, req).Return(fmt.Errorf("error"))
+		s.On("TaskAdd", mock.Anything, entities.Task{ID: req.Id, Name: req.Name, Description: req.Description, Owner: req.Owner}).Return(fmt.Errorf("error"))
 
 		res, err := h.TaskAdd(context.Background(), req)
 		assert.Error(t, err)
