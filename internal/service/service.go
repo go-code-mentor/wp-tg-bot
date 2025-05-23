@@ -7,20 +7,24 @@ import (
 	"github.com/go-code-mentor/wp-tg-bot/internal/entities"
 )
 
+type Client interface {
+	SendMessage(ctx context.Context, msg string) error
+}
+
 type Service struct {
-	client *client.Telegram
+	Client Client
 }
 
 func New(telegram *client.Telegram) *Service {
 	return &Service{
-		client: telegram,
+		Client: telegram,
 	}
 }
 
 func (s *Service) TaskAdd(ctx context.Context, task entities.Task) error {
 	msg := fmt.Sprintf("New task added with id: %d,name: %s,description: %s,owner: %s", task.ID, task.Name, task.Description, task.Owner)
 
-	err := s.client.SendMessage(ctx, msg)
+	err := s.Client.SendMessage(ctx, msg)
 	if err != nil {
 		return fmt.Errorf("error sending message: %w", err)
 	}
