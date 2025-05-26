@@ -2,7 +2,7 @@ package server
 
 import (
 	"fmt"
-	"log"
+	"github.com/go-code-mentor/wp-tg-bot/internal/logger"
 	"net"
 
 	"google.golang.org/grpc"
@@ -22,7 +22,7 @@ func (s *Server) Run(addr string) error {
 		return fmt.Errorf("failed to open socket: %w", err)
 	}
 
-	log.Printf("Starting gRPC server on %s", addr)
+	logger.Info(fmt.Sprintf("Starting gRPC server on %s", addr))
 	return s.Grpc.Serve(lis)
 }
 
