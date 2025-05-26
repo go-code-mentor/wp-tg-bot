@@ -2,16 +2,16 @@ package logger
 
 import "log/slog"
 
-func Debug(msg string, args ...any) {
-	slog.Debug(msg, args)
+func Debug(msg string) {
+	slog.Debug(msg)
 }
 
-func Info(msg string, args ...any) {
-	slog.Info(msg, args)
+func Info(msg string) {
+	slog.Info(msg)
 }
-func Warn(msg string, args ...any) {
-	slog.Warn(msg, args)
+func Warn(msg string) {
+	slog.Warn(msg)
 }
-func Error(msg string, args ...any) {
-	slog.Error(msg, args)
+func Error(msg string) {
+	slog.Error(msg)
 }
