@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/go-code-mentor/wp-tg-bot/internal/app"
 	"github.com/go-code-mentor/wp-tg-bot/internal/config"
+	"github.com/go-code-mentor/wp-tg-bot/internal/logger"
 	"log"
 )
 
@@ -21,5 +22,5 @@ func main() {
 		log.Fatalf("failed to run app: %s", err)
 	}
 
-	log.Println("app successfully stopped")
+	logger.Info("App successfully stopped")
 }
