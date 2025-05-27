@@ -22,7 +22,7 @@ func (s *Server) Run(addr string) error {
 		return fmt.Errorf("failed to open socket: %w", err)
 	}
 
-	logger.Info(fmt.Sprintf("Starting gRPC server on %s", addr))
+	logger.Infof("Starting gRPC server on %s", addr)
 	return s.Grpc.Serve(lis)
 }
 

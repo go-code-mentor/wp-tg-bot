@@ -41,7 +41,7 @@ func (h *Handler) TaskAdd(ctx context.Context, req *api.TaskAddRequest) (*api.Ta
 
 	err := h.Service.TaskAdd(ctx, task)
 	if err != nil {
-		logger.Error(fmt.Sprintf("Failed to adding task: %v", err))
+		logger.Errorf("Failed to adding task: %v", err)
 		return &api.TaskAddResponse{
 			Status: "FAILED",
 		}, fmt.Errorf("failed to adding task: %w", err)
